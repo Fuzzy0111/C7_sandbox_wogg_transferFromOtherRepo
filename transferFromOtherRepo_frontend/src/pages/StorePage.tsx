@@ -5,9 +5,11 @@ import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+// import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Search, ShoppingCart, Heart } from 'lucide-react';
-import { useProductCards, useProductTypes, useCategories, useCreateReservation } from '@/hooks/useQueries';
+import { useProductCards, 
+	 // useProductTypes, useCategories, 
+	 useCreateReservation } from '@/hooks/useQueries';
 import { FilterParams } from '@/types';
 
 const StorePage: React.FC = () => {
@@ -23,8 +25,8 @@ const StorePage: React.FC = () => {
     });
 
     const { data: productCardsData, isLoading, error } = useProductCards(filters);
-    const { data: productTypes } = useProductTypes();
-    const { data: categories } = useCategories();
+    // const { data: productTypes } = useProductTypes();
+    // const { data: categories } = useCategories();
     const createReservationMutation = useCreateReservation();
 
     const handleSearch = (e: React.FormEvent) => {

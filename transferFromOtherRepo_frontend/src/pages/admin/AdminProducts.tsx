@@ -19,7 +19,7 @@ import {
     useUpdateProduct,
     useDeleteProduct,
     useProductTypes,
-    useCategories, useProduct
+    useCategories,
 } from '@/hooks/useQueries';
 import { CreateProductData, UpdateProductData, FilterParams } from '@/types';
 

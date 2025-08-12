@@ -13,7 +13,7 @@ import {
   Settings,
   BarChart3
 } from 'lucide-react';
-import {useAdminStats, useProduct} from '@/hooks/useQueries';
+import { useAdminStats } from '@/hooks/useQueries';
 import { cn } from '@/lib/utils';
 import AdminProducts from './AdminProducts.tsx';
 import AdminUsers from './AdminUsers';

@@ -6,7 +6,6 @@ import {
     FilterParams
 } from '@/types';
 import { API_ENDPOINTS } from '@/utils/constants';
-import {useProduct} from "@/hooks/useQueries.ts";
 
 class ProductCardsService {
     async getProductCards(params?: FilterParams): Promise<PaginatedResponse<ProductCard>> {

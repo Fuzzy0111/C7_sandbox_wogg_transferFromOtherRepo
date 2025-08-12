@@ -8,8 +8,7 @@ import {
     UpdateProductData
 } from '@/types';
 import { API_ENDPOINTS } from '@/utils/constants';
-import {useProductTypes} from "@/hooks/useQueries.ts";
-//import {useProduct} from "@/hooks/useQueries.ts";
+
 
 class ProductsService {
     async getProducts(params?: FilterParams): Promise<PaginatedResponse<Product>> {

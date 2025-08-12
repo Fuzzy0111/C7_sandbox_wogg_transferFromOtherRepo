@@ -1,4 +1,3 @@
-import {useProduct} from "@/hooks/useQueries.ts";
 
 export interface User {
     id: string;

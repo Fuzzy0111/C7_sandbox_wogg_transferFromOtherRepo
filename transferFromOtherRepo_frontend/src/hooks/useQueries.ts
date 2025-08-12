@@ -124,7 +124,7 @@ export const useProductCard = (id: string) => {
     });
 };
 
-export const useFeaturedPostcards = () => {
+export const useFeaturedProductCards = () => {
     return useQuery({
         queryKey: [QUERY_KEYS.PRODUCT_CARDS, 'featured'],
         queryFn: () => productCardsService.getFeaturedProductCards(),

@@ -97,7 +97,7 @@ const AdminReservations: React.FC = () => {
                         <TableHeader>
                             <TableRow className="border-gray-700">
                                 <TableHead className="text-gray-300">Customer</TableHead>
-                                <TableHead className="text-gray-300">Postcard</TableHead>
+                                <TableHead className="text-gray-300">Product</TableHead>
                                 <TableHead className="text-gray-300">Quantity</TableHead>
                                 <TableHead className="text-gray-300">Total</TableHead>
                                 <TableHead className="text-gray-300">Status</TableHead>
