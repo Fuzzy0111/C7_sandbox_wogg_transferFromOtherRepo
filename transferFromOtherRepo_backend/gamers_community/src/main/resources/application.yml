@@ -1,0 +1,58 @@
+
+micronaut:
+  application:
+    name: gamers_community
+  server:
+    port: 8080
+    cors:
+      enabled: true
+      configurations:
+        web:
+          allowedOrigins:
+            - "http://localhost:3000"
+            - "http://localhost:5173"
+          allowedMethods:
+            - GET
+            - POST
+            - PUT
+            - DELETE
+            - OPTIONS
+          allowedHeaders:
+            - "*"
+          allowCredentials: true
+  security:
+    authentication: bearer
+    token:
+      jwt:
+        signatures:
+          secret:
+            generator:
+              secret: "vbrhLJRSTDAR456TQRCHZRB892517ZzdtaAartutkwD23ar"
+              jws-algorithm: HS256
+    endpoints:
+      login:
+        enabled: true
+        path: /api/auth/login
+      logout:
+        enabled: true
+        path: /api/auth/logout
+
+
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+  # Explicitly don't look for XML mappers
+  mapper-locations: []
+
+datasources:
+  default:
+    url: jdbc:mysql://localhost:3306/wogg_mysql_db
+    driverClassName: com.mysql.cj.jdbc.Driver
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:Olschool230187r}
+    dialect: MYSQL
+    pool:
+      initial-size: 10
+      max-size: 20
+      min-size: 5

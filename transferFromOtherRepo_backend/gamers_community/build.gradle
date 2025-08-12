@@ -1,0 +1,115 @@
+plugins {
+    id("io.micronaut.application") version "4.5.4"
+    id("com.gradleup.shadow") version "8.3.7"
+    id("io.micronaut.aot") version "4.5.4"
+    id("war")
+}
+
+version = "0.1"
+group = "com.wog"
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation("io.micronaut:micronaut-http-client")
+    implementation("io.micronaut:micronaut-http-server-netty")
+    implementation("io.micronaut.validation:micronaut-validation")
+
+    annotationProcessor("io.micronaut:micronaut-http-validation")
+    annotationProcessor("io.micronaut.serde:micronaut-serde-processor")
+    annotationProcessor("io.micronaut.validation:micronaut-validation-processor")
+    annotationProcessor("io.micronaut.servlet:micronaut-servlet-processor")
+    implementation("io.micronaut.serde:micronaut-serde-jackson")
+    implementation("io.micronaut:micronaut-jackson-databind")
+
+    implementation("io.micronaut.security:micronaut-security")
+    implementation("io.micronaut.security:micronaut-security-annotations")
+    implementation("io.micronaut.security:micronaut-security-jwt")
+    implementation("io.micronaut.security:micronaut-security-oauth2")
+    implementation("org.springframework.security:spring-security-crypto:6.1.5")
+
+//    implementation("io.micronaut.data:micronaut-data-jpa")
+//    annotationProcessor("io.micronaut.data:micronaut-data-processor")
+//
+    // For embedded development (Netty)
+    implementation("io.micronaut:micronaut-http-server-netty")
+
+
+    // For WAR deployment (Servlet/Tomcat) - with proper version
+    providedRuntime("io.micronaut.servlet:micronaut-servlet-core:4.10.1")
+    
+    implementation("mysql:mysql-connector-java:8.0.33")
+    implementation("io.micronaut.sql:micronaut-jdbc-hikari")
+    implementation("org.mybatis:mybatis:3.5.13")
+
+    runtimeOnly("ch.qos.logback:logback-classic")
+    testImplementation("io.micronaut:micronaut-http-client")
+}
+
+
+application {
+    mainClass = "com.wog.Application"
+}
+java {
+    sourceCompatibility = JavaVersion.toVersion("21")
+    targetCompatibility = JavaVersion.toVersion("21")
+}
+
+
+graalvmNative.toolchainDetection = false
+
+micronaut {
+    runtime("netty")  // Default for development
+    testRuntime("junit5")
+    processing {
+        incremental(true)
+        annotations("com.wog.*")
+    }
+    aot {
+        // Please review carefully the optimizations enabled below
+        // Check https://micronaut-projects.github.io/micronaut-aot/latest/guide/ for more details
+        optimizeServiceLoading = false
+        convertYamlToJava = false
+        precomputeOperations = true
+        cacheEnvironment = true
+        optimizeClassLoading = true
+        deduceEnvironment = true
+        optimizeNetty = true
+        replaceLogbackXml = true
+    }
+}
+
+
+
+
+// DUAL MODE CONFIGURATION
+// JAR: enabled for development (IntelliJ Run/Debug)
+jar {
+    enabled = true
+    archiveClassifier = 'standalone'  // So it doesn't conflict with WAR
+}
+
+// WAR: enabled for production containers
+war {
+    enabled = true
+    archiveFileName = 'app.war'
+    // Exclude Netty from WAR since Tomcat provides servlet container
+    excludes = ['**/netty/**']
+}
+
+// Create a development task that explicitly uses JAR
+task runDev(type: JavaExec) {
+    group = 'application'
+    description = 'Run the application in development mode with embedded server'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = application.mainClass
+    systemProperty 'micronaut.server.port', '8080'
+}
+
+tasks.named("dockerfileNative") {
+    jdkVersion = "21"
+}
+
+
