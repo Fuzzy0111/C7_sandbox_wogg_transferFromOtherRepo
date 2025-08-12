@@ -20,8 +20,12 @@ micronaut:
           allowedHeaders:
             - "*"
           allowCredentials: true
+    netty:
+      access-logger:
+        enabled: true
   security:
     authentication: bearer
+    reject-not-found: false
     token:
       jwt:
         signatures:
@@ -36,8 +40,14 @@ micronaut:
       logout:
         enabled: true
         path: /api/auth/logout
-
-
+    intercept-url-map:
+      - pattern: /api/**
+        http-method: OPTIONS
+        access:
+          - isAnonymous()
+      - pattern: /api/auth/**
+        access:
+          - isAnonymous()
 
 mybatis:
   configuration:
@@ -53,6 +63,12 @@ datasources:
     password: ${DB_PASSWORD:Olschool230187r}
     dialect: MYSQL
     pool:
-      initial-size: 10
-      max-size: 20
-      min-size: 5
+      initialSize: 10
+      maxSize: 20
+      minSize: 5
+
+# Logging levels
+logger:
+  level:
+    io.micronaut.http.server.netty: DEBUG
+    io.netty.handler.logging: DEBUG	
