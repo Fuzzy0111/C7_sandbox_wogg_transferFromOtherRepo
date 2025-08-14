@@ -1,6 +1,7 @@
 package com.wog.config;
-//
+
 import com.wog.mapper.AuthorMapper;
+import com.wog.mapper.UserMapper;
 import com.wog.mapper.StockItemMapper;
 import com.wog.mapper.StockMapper;
 import com.wog.mapper.ReservationMapper;
@@ -37,6 +38,7 @@ public class MybatisFactory {
         configuration.addMapper(StockMapper.class);
         configuration.addMapper(StockItemMapper.class);
         configuration.addMapper(AuthorMapper.class);
+        configuration.addMapper(UserMapper.class);
         configuration.addMapper(ReservationMapper.class);
 
         return new SqlSessionFactoryBuilder().build(configuration);
@@ -55,6 +57,11 @@ public class MybatisFactory {
     @Singleton
     public AuthorMapper authorMapper(SqlSessionFactory sqlSessionFactory) {
         return sqlSessionFactory.openSession(true).getMapper(AuthorMapper.class);
+    }
+
+    @Singleton
+    public UserMapper userMapper(SqlSessionFactory sqlSessionFactory) {
+        return sqlSessionFactory.openSession(true).getMapper(UserMapper.class);
     }
 
     @Singleton
